@@ -1,21 +1,91 @@
-version: '3'
+version: "3.4"
 
 services:
-###> doctrine/doctrine-bundle ###
-  database:
-    image: postgres:${POSTGRES_VERSION:-14}-alpine
-    environment:
-      POSTGRES_DB: ${POSTGRES_DB:-app}
-      # You should definitely change the password in production
-      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:-!ChangeMe!}
-      POSTGRES_USER: ${POSTGRES_USER:-app}
+  php:
+    build:
+      context: .
+      target: symfony_php
+      args:
+        SYMFONY_VERSION: ${SYMFONY_VERSION:-}
+        STABILITY: ${STABILITY:-stable}
+    restart: unless-stopped
     volumes:
-      - db-data:/var/lib/postgresql/data:rw
-      # You may use a bind-mounted host directory instead, so that it is harder to accidentally remove the volume and lose all your data!
-      # - ./docker/db/data:/var/lib/postgresql/data:rw
-###< doctrine/doctrine-bundle ###
+      - php_socket:/var/run/php
+    depends_on:
+      - database
+    environment:
+      DATABASE_URL: mysql://${DATABASE_USER}:${DATABASE_PASSWORD}@database:3306/${DATABASE_NAME}?serverVersion=8
+      # Run "composer require symfony/mercure-bundle" to install and configure the Mercure integration
+      # MERCURE_PUBLISH_URL: ${MERCURE_URL:-http://caddy/.well-known/mercure}
+      SYMFONY_VERSION:
+
+  phpmyadmin:
+    image: phpmyadmin/phpmyadmin
+    depends_on:
+      - database
+    environment:
+      MYSQL_ROOT_PASSWORD: root
+      PMA_HOST: database
+    ports:
+      - 8080:80
+
+  database:
+    image: mysql:8.0
+    environment:
+      - MYSQL_RANDOM_ROOT_PASSWORD=yes
+      - MYSQL_DATABASE=${DATABASE_NAME}
+      - MYSQL_USER=${DATABASE_USER}
+      - MYSQL_PASSWORD=${DATABASE_PASSWORD}
+    volumes:
+      - ./docker/mysql:/var/lib/mysql
+    command: --default-authentication-plugin=mysql_native_password
+    security_opt:
+      - seccomp:unconfined
+    ports:
+      - 3306:3306
+
+  composer:
+    image: composer:latest
+    command: install
+    volumes:
+      - .:/app
+  node:
+    build: docker/node-alpine
+    volumes:
+      - .:/app:cached
+    working_dir: /app
+  mailhog:
+    image: mailhog/mailhog
+    logging:
+      driver: 'none'
+    ports:
+      - 1025:1025 # smtp server
+      - 8025:8025 # interface port
+
+# ###> symfony/mercure-bundle ###
+#   mercure:
+#     image: dunglas/mercure
+#     restart: unless-stopped
+#     environment:
+#       SERVER_NAME: ':80'
+#       MERCURE_PUBLISHER_JWT_KEY: '!ChangeMe!'
+#       MERCURE_SUBSCRIBER_JWT_KEY: '!ChangeMe!'
+#       # Set the URL of your Symfony project (without trailing slash!) as value of the cors_origins directive
+#       MERCURE_EXTRA_DIRECTIVES: |
+#         cors_origins http://127.0.0.1:8000
+#     # Comment the following line to disable the development mode
+#     command: /usr/bin/caddy run -config /etc/caddy/Caddyfile.dev
+#     volumes:
+#       - mercure_data:/data
+#       - mercure_config:/config
+# ###< symfony/mercure-bundle ###
 
 volumes:
-###> doctrine/doctrine-bundle ###
-  db-data:
-###< doctrine/doctrine-bundle ###
+  php_socket:
+  # caddy_data:
+  # caddy_config:
+
+# ###> symfony/mercure-bundle ###
+#   mercure_data:
+#   mercure_config:
+# ###< symfony/mercure-bundle ###
