@@ -25,7 +25,7 @@ help:  ## Outputs this help screen
 
 ## ------- Project ----------------------------------------
 reboot: stop up ## Reboot development environment
-start: up yarn encore ## Initialize the project
+start: up ## Initialize the project
 
 ## ------- Docker -----------------------------------------
 up: ## Start the docker hub

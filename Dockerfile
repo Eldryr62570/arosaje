@@ -58,7 +58,7 @@ RUN set -eux; \
 	apk del .build-deps
 
 RUN docker-php-ext-install pdo_mysql
-RUN docker-php-ext-install mysqli && docker-php-ext-enable mysqli
+
 
 COPY docker/php/docker-healthcheck.sh /usr/local/bin/docker-healthcheck
 RUN chmod +x /usr/local/bin/docker-healthcheck

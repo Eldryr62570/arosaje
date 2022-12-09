@@ -14,7 +14,7 @@ services:
     depends_on:
       - database
     environment:
-      DATABASE_URL: mysql://${DATABASE_USER}:${DATABASE_PASSWORD}@${DATABASE_HOST}/${DATABASE_NAME}?serverVersion=8
+      DATABASE_URL: mysql://${DATABASE_USER}:${DATABASE_PASSWORD}@database:3306/${DATABASE_NAME}?serverVersion=8
       # Run "composer require symfony/mercure-bundle" to install and configure the Mercure integration
       # MERCURE_PUBLISH_URL: ${MERCURE_URL:-http://caddy/.well-known/mercure}
       SYMFONY_VERSION:
@@ -42,7 +42,7 @@ services:
     security_opt:
       - seccomp:unconfined
     ports:
-      - 3306:3306
+      - 3307:3306
 
   composer:
     image: composer:latest
