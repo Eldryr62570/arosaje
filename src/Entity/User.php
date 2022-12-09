@@ -3,6 +3,8 @@
 namespace App\Entity;
 
 use App\Repository\UserRepository;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface;
 use Symfony\Component\Security\Core\User\UserInterface;
@@ -38,6 +40,18 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
 
     #[ORM\Column(length: 255, nullable: true)]
     private ?string $username = null;
+
+    #[ORM\OneToMany(mappedBy: 'User', targetEntity: Commentaire::class)]
+    private Collection $commentaires;
+
+    #[ORM\OneToMany(mappedBy: 'Users', targetEntity: Plante::class)]
+    private Collection $plantes;
+
+    public function __construct()
+    {
+        $this->commentaires = new ArrayCollection();
+        $this->plantes = new ArrayCollection();
+    }
 
     public function getId(): ?int
     {
@@ -153,6 +167,65 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     public function setUsername(?string $username): self
     {
         $this->username = $username;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Commentaire>
+     */
+    public function getCommentaires(): Collection
+    {
+        return $this->commentaires;
+    }
+
+    public function addCommentaire(Commentaire $commentaire): self
+    {
+        if (!$this->commentaires->contains($commentaire)) {
+            $this->commentaires->add($commentaire);
+            $commentaire->setUser($this);
+        }
+        return $this;
+    }
+
+    public function removeCommentaire(Commentaire $commentaire): self
+    {
+        if ($this->commentaires->removeElement($commentaire)) {
+            // set the owning side to null (unless already changed)
+            if ($commentaire->getUser() === $this) {
+                $commentaire->setUser(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Plante>
+     */
+    public function getPlantes(): Collection
+    {
+        return $this->plantes;
+    }
+
+    public function addPlante(Plante $plante): self
+    {
+        if (!$this->plantes->contains($plante)) {
+            $this->plantes->add($plante);
+            $plante->setUsers($this);
+        }
+
+        return $this;
+    }
+
+    public function removePlante(Plante $plante): self
+    {
+        if ($this->plantes->removeElement($plante)) {
+            // set the owning side to null (unless already changed)
+            if ($plante->getUsers() === $this) {
+                $plante->setUsers(null);
+            }
+        }
 
         return $this;
     }
