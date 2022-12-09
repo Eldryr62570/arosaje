@@ -32,7 +32,6 @@ services:
   database:
     image: mysql:8.0
     environment:
-      - MYSQL_RANDOM_ROOT_PASSWORD=yes
       - MYSQL_DATABASE=${DATABASE_NAME}
       - MYSQL_USER=${DATABASE_USER}
       - MYSQL_PASSWORD=${DATABASE_PASSWORD}
@@ -42,7 +41,7 @@ services:
     security_opt:
       - seccomp:unconfined
     ports:
-      - 3307:3306
+      - 3306:3307
 
   composer:
     image: composer:latest
