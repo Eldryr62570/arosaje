@@ -6,6 +6,7 @@
         "@symfony/stimulus-bridge": "^3.2.0",
         "@symfony/webpack-encore": "^4.0.0",
         "core-js": "^3.23.0",
+        "file-loader": "^6.0.0",
         "regenerator-runtime": "^0.13.9",
         "sass": "^1.57.1",
         "webpack": "^5.74.0",
@@ -21,6 +22,7 @@
         "build": "encore production --progress"
     },
     "dependencies": {
+        "aos": "^2.3.4",
         "autoprefixer": "^10.4.13",
         "postcss": "^8.4.20",
         "postcss-loader": "^7.0.2",

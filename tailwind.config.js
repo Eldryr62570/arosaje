@@ -5,7 +5,14 @@ module.exports = {
     "./templates/**/*.html.twig",
   ],
   theme: {
-    extend: {},
+    extend: {
+      fontFamily: {
+        'mont': ['Montserrat', 'sans-serif'],
+        'romono': ['Roboto Mono', 'sans-serif'],
+        'roboto': ['Roboto', 'sans-serif'],
+        'space': ['Space Grotesk', 'sans-serif'],
+      },
+    },
   },
   plugins: [],
 }

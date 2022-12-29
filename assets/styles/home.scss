@@ -1,0 +1,19 @@
+#slider-section {
+    #slider {
+        div:nth-child(1){
+            background-image: url('../img/slide1.jpg');
+        }
+        div:nth-child(2){
+            background-image: url('../img/slide2.jpg');
+        }
+        div:nth-child(3){
+            background-image: url('../img/slide3.jpg');
+        }
+        div:nth-child(4){
+            background-image: url('../img/slide4.jpg');
+        }
+        .active-slide {
+            opacity: 1;
+        }
+    }
+}
