@@ -55,7 +55,7 @@ class Plante
     private ?User $Users = null;
 
     #[ORM\ManyToOne(inversedBy: 'Plantes')]
-    #[ORM\JoinColumn(nullable: false)]
+    #[ORM\JoinColumn(nullable: true)]
     private ?ResumePlante $resumePlante = null;
 
     public function __construct()

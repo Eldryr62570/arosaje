@@ -18,6 +18,7 @@ class AppFixtures extends Fixture
     }
     public function load(ObjectManager $manager): void
     {
+        //User
         $faker = Factory::create('fr_FR');
         for ($i = 0; $i < 20; $i++) {
             $user = new User();
@@ -42,41 +43,24 @@ class AppFixtures extends Fixture
             );
             $user->setPassword($hashedPassword);
             $manager->persist($user);
-            $manager->flush();
-
-            for ($i=0; $i < 5 ; $i++) { 
-                $resumePlante = new ResumePlante();
-                $resumePlante->setNomResumePlante($faker->word(5));
-                $manager->persist($resumePlante);
-                $manager->flush();
-            }
-            
-            // Génération des plantes par user présent
-            $limitPlant = $faker->randomDigit();
-
-            $resumesPlante = $manager->getRepository(ResumePlante::class)->findAll();
-            for ($i = 0; $i < 5; $i++) {
-                $plant = new Plante();
-                $plant->setUsers($user)
-                ->setAdressePlante($faker->buildingNumber()." rue ". 
-                    $faker->streetName()." ".
-                    $faker->postcode()." ".
-                    $faker->city()
-                )
-                ->setDescriptionPlante($faker->paragraph(3))
-                ->setImgPlante($faker->imageUrl(360, 360, 'plant', true))
-                ->setIsExterieur($faker->boolean())
-                ->setResumePlante();
-                
-                $manager->persist($plant);
-                $manager->flush();
-            }
-            
-
+            $manager->flush(); 
         }
 
-        
-
-        $manager->flush();
+        //Plantes
+        $users = $manager->getRepository(User::class)->findAll();
+        for ($i = 0; $i < 5; $i++) {
+            $plant = new Plante();
+            $plant->setUsers($users[array_rand($users)])
+            ->setAdressePlante($faker->buildingNumber()." rue ". 
+                $faker->streetName()." ".
+                $faker->postcode()." ".
+                $faker->city()
+            )
+            ->setDescriptionPlante($faker->paragraph(3))
+            ->setImgPlante($faker->imageUrl(360, 360, 'plant', true))
+            ->setIsExterieur($faker->boolean());
+            $manager->persist($plant);
+            $manager->flush();
+        }
     }
 }
