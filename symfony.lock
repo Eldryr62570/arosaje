@@ -162,8 +162,7 @@
             "templates/base.html.twig"
         ]
     },
-
-   "symfony/validator": {
+    "symfony/validator": {
         "version": "6.2",
         "recipe": {
             "repo": "github.com/symfony/recipes",
@@ -173,7 +172,6 @@
         },
         "files": [
             "./config/packages/validator.yaml"
-
         ]
     },
     "twig/extra-bundle": {
