@@ -2,6 +2,7 @@
 
 namespace App\DataFixtures;
 
+use App\Entity\Commentaire;
 use App\Entity\Plante;
 use App\Entity\ResumePlante;
 use Faker\Factory;
@@ -48,7 +49,7 @@ class AppFixtures extends Fixture
 
         //Plantes
         $users = $manager->getRepository(User::class)->findAll();
-        for ($i = 0; $i < 5; $i++) {
+        for ($i = 0; $i < 40; $i++) {
             $plant = new Plante();
             $plant->setUsers($users[array_rand($users)])
             ->setAdressePlante($faker->buildingNumber()." rue ". 
@@ -60,6 +61,25 @@ class AppFixtures extends Fixture
             ->setImgPlante($faker->imageUrl(360, 360, 'plant', true))
             ->setIsExterieur($faker->boolean());
             $manager->persist($plant);
+            $manager->flush();
+        }
+        $plants = $manager->getRepository(Plante::class)->findAll();
+        for ($i=0; $i < 7 ; $i++) { 
+            $resumePlante = new ResumePlante();
+            for ($j=0; $j < 3 ; $j++) { 
+                $resumePlante->addPlante($plants[array_rand($plants)]);
+            }
+            $resumePlante->setNomResumePlante($faker->word(1));
+            $manager->persist($resumePlante);
+            $manager->flush();
+        }
+        for ($i=0; $i <50 ; $i++) { 
+            $commentaire = new Commentaire();
+            $commentaire->setDescriptionCommentaire($faker->sentence(9))
+            ->setPlante($plants[array_rand($plants)])
+            ->setTitreCommentaire($faker->word(2))
+            ->setUser($users[array_rand($users)]);
+            $manager->persist($commentaire);
             $manager->flush();
         }
     }
