@@ -2,33 +2,53 @@
 
 namespace App\Entity;
 
-use App\Repository\PlanteRepository;
-use Doctrine\Common\Collections\ArrayCollection;
-use Doctrine\Common\Collections\Collection;
+use App\Entity\Commentaire;
+use ApiPlatform\Metadata\Get;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
+use App\Repository\PlanteRepository;
+use ApiPlatform\Metadata\ApiResource;
+use ApiPlatform\Metadata\GetCollection;
+use Doctrine\Common\Collections\Collection;
+use Doctrine\Common\Collections\ArrayCollection;
+use Symfony\Component\Serializer\Annotation\Groups;
 
+
+
+
+#[ApiResource(
+    normalizationContext: ['groups' => ['read:plante']],
+    operations: [
+    new Get(),
+    new GetCollection()
+])]
 #[ORM\Entity(repositoryClass: PlanteRepository::class)]
 class Plante
 {
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column]
+    #[Groups(['read:plante'])]
     private ?int $id = null;
 
     #[ORM\Column(length: 255)]
+    #[Groups(['read:plante'])]
     private ?string $adresse_plante = null;
 
     #[ORM\Column]
+    #[Groups(['read:plante'])]
     private ?bool $is_exterieur = null;
 
     #[ORM\Column(type: Types::TEXT, nullable: true)]
+    #[Groups(['read:plante'])]
     private ?string $description_plante = null;
 
     #[ORM\Column(length: 255)]
+    #[Groups(['read:plante'])]
     private ?string $img_plante = null;
 
     #[ORM\OneToMany(mappedBy: 'plante', targetEntity: Commentaire::class)]
+    #[Groups(['read:plante'])]
     private Collection $Commentaire;
 
     #[ORM\ManyToOne(inversedBy: 'plantes')]

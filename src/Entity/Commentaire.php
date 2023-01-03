@@ -2,24 +2,32 @@
 
 namespace App\Entity;
 
-use App\Repository\CommentaireRepository;
 use Doctrine\ORM\Mapping as ORM;
+use ApiPlatform\Metadata\ApiResource;
+use App\Repository\CommentaireRepository;
+use Symfony\Component\Serializer\Annotation\Groups;
 
+
+#[ApiResource]
 #[ORM\Entity(repositoryClass: CommentaireRepository::class)]
 class Commentaire
 {
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column]
+    #[Groups(['read:plante'])]
     private ?int $id = null;
 
     #[ORM\Column(length: 255)]
+    #[Groups(['read:plante'])]
     private ?string $titre_commentaire = null;
 
     #[ORM\Column(length: 255)]
+    #[Groups(['read:plante'])]
     private ?string $description_commentaire = null;
 
     #[ORM\ManyToOne(inversedBy: 'commentaires')]
+    #[Groups(['read:plante'])]
     private ?User $User = null;
 
     #[ORM\ManyToOne(inversedBy: 'Commentaire')]

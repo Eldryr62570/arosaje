@@ -2,11 +2,13 @@
 
 namespace App\Entity;
 
-use App\Repository\ResumePlanteRepository;
-use Doctrine\Common\Collections\ArrayCollection;
-use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use ApiPlatform\Metadata\ApiResource;
+use App\Repository\ResumePlanteRepository;
+use Doctrine\Common\Collections\Collection;
+use Doctrine\Common\Collections\ArrayCollection;
 
+#[ApiResource]
 #[ORM\Entity(repositoryClass: ResumePlanteRepository::class)]
 class ResumePlante
 {
@@ -20,10 +22,6 @@ class ResumePlante
 
     #[ORM\OneToMany(mappedBy: 'resumePlante', targetEntity: Plante::class)]
     private Collection $Plantes;
-
-    #[ORM\ManyToOne(inversedBy: 'resumePlante')]
-    #[ORM\JoinColumn(nullable: false)]
-    private ?TypePlante $typePlante = null;
 
     public function __construct()
     {
@@ -77,15 +75,4 @@ class ResumePlante
         return $this;
     }
 
-    public function getTypePlante(): ?TypePlante
-    {
-        return $this->typePlante;
-    }
-
-    public function setTypePlante(?TypePlante $typePlante): self
-    {
-        $this->typePlante = $typePlante;
-
-        return $this;
-    }
 }
