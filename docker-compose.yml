@@ -1,0 +1,49 @@
+version: "3.8"
+services:
+    # Mysql database container
+    database:
+        image: mysql
+        container_name: arosaje_db_symfony
+        restart: always
+        volumes:
+            - db-data:/var/lib/mysql
+        ports:
+            - 3307:3306
+        environment:
+            MYSQL_ROOT_PASSWORD: root
+            MYSQL_DATABASE: arosaje_db
+        networks:
+            - arosaje
+
+    # phpmyadmin container
+    phpmyadmin:
+        image: phpmyadmin
+        container_name: arosaje_phpmyadmin
+        restart: always
+        depends_on:
+            - database
+        ports:
+            - 8080:80
+        environment:
+            PMA_HOST: database
+        networks:
+            - arosaje
+
+    # Symfony apache project container
+    www:
+        build: docker/php
+        container_name: arosaje_symfony
+        ports:
+          - "8741:80"
+        volumes:
+            - ./docker/php/vhosts:/etc/apache2/sites-enabled
+            - ./:/var/www
+        restart: always
+        networks:
+            - arosaje
+
+networks:
+    arosaje:
+
+volumes:
+    db-data:
