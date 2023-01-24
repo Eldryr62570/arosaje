@@ -3,7 +3,7 @@
 
 ## Initialisation du projet avec Docker : 
 
-# Information : 
+### Information : 
 
 - Fichier docker-compose.yml : Nous ajoutons le serveur mysql, phpMyAdmin et le serveur apache à la liste des services
 
@@ -11,20 +11,20 @@
 
 - Fichier dans les répertoires docker/php/vhosts/ vhosts.conf :
 
-# Initialiser Docker :
+### Initialiser Docker :
 
 1. git clone le repository et rentrer dans ce répertoire
 2. Lancez la commande 'docker-compose up --build'
 
 <b>Le projet Symfony est déjà créer passer à l'étape 9 directement si le repertoire Arosaje existe déjà .<b>
 
-# Créer un projet Symfony : 
+### Créer un projet Symfony : 
 
 3. Accéder au conteneur Arosaje_symfony et rentrer dans le terminal du conteneur et exécuter la commande
 'curl -sS https://get.symfony.com/cli/installer | bash'(symfony CLI : https://symfony.com/download) et la commande 'composer create-project symfony/skeleton:"6.2.*" arosaje' (projet symfony skeleton)
 4. L'application Symfony est maintenant accessible sur http://localhost:8741/
 
-# Configurez la connexion Mysql au projet Symfony : 
+### Configurez la connexion Mysql au projet Symfony : 
 
 5. cd sur le repertoire du projet symfony 'arosaje'
 6. composer require symfony/orm-pack
@@ -32,7 +32,7 @@
 
 8. A la racine du repo git '.env.exemple' , mettre dans .env du repertoire projet symfony 'Arosaje'
 
-# Vous pouvez maintenant tester votre connexion à la base de données :
+### Vous pouvez maintenant tester votre connexion à la base de données :
 
 9. Lancez la commande si le base de données n'existe pas déjà : 'php bin/console doctrine:database:create'
 10. Accéder à l'URL 'http://localhost:8080/' ID : root / MDP : root , Vérifier si la bdd Arosaje_db est bien là .
