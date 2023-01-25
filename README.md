@@ -22,7 +22,7 @@
 
 3. Accéder au conteneur Arosaje_symfony et rentrer dans le terminal du conteneur et exécuter la commande
 'curl -sS https://get.symfony.com/cli/installer | bash'(symfony CLI : https://symfony.com/download) et la commande 'composer create-project symfony/skeleton:"6.2.*" arosaje' (projet symfony skeleton)
-4. L'application Symfony est maintenant accessible sur http://localhost:8741/
+4. L'application Symfony est maintenant accessible sur http://localhost:8741/ ( n'oubliez pas de faire un "composer install dans le repertoire de symfony" ) 
 
 ### Configurez la connexion Mysql au projet Symfony : 
 
@@ -37,6 +37,7 @@
 9. Lancez la commande si le base de données n'existe pas déjà : 'php bin/console doctrine:database:create'
 10. Accéder à l'URL 'http://localhost:8080/' ID : root / MDP : root , Vérifier si la bdd Arosaje_db est bien là .
 
+Note : si le projet est déjà installer, n'oubliez pas de faire un "composer install dans le repertoire de symfony" pour afficher la page sur http://localhost:8741/
 
 
 ## Description du projet
