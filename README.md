@@ -55,11 +55,14 @@ permettant aux utilisateurs de faire garder leurs plantes avec un partage de pho
 Dans l’application seul les botanistes pourront donner des conseils.
 L’entreprise souhaite aussi mettre en place une I.A afin de pouvoir reconnaître les plantes et donner
 quelques conseils adaptés préalables.
-##Technologie
+
+## Technologie
+
 - Backend Symfony 
 - React pour le front
 - Utilisation d'api platforme pour le back
-## Features du projet 
+## Features du projet
+
 - Service de location de service pour demander à des particulier de s'occuper des plantes
 - Aide en ligne via des profesionnels pour donner des conseils
 - Prise de photo de la plante
