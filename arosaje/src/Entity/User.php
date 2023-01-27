@@ -36,16 +36,13 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\Column(length: 100)]
     private ?string $prenom_user = null;
 
-    #[ORM\Column(length: 100)]
-    private ?string $mail_user = null;
-
-    #[ORM\Column(length: 10, nullable: true)]
+    #[ORM\Column(length: 25, nullable: true)]
     private ?string $phone_user = null;
 
     #[ORM\Column(length: 150, nullable: true)]
     private ?string $addr_user = null;
 
-    #[ORM\Column(length: 5, nullable: true)]
+    #[ORM\Column(length: 50, nullable: true)]
     private ?string $cp_user = null;
 
     #[ORM\Column(length: 100, nullable: true)]
@@ -165,18 +162,6 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     public function setPrenomUser(string $prenom_user): self
     {
         $this->prenom_user = $prenom_user;
-
-        return $this;
-    }
-
-    public function getMailUser(): ?string
-    {
-        return $this->mail_user;
-    }
-
-    public function setMailUser(string $mail_user): self
-    {
-        $this->mail_user = $mail_user;
 
         return $this;
     }
