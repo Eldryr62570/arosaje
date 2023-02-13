@@ -6,6 +6,18 @@
 parameters:
 
 services:
+    # Toutes nos classes fixtures ici
+    App\DataFixtures\FixtureProvider\CommentaireProviderFixture:
+        public: true
+    App\DataFixtures\FixtureProvider\TypeProviderFixture:
+        public: true
+    App\DataFixtures\FixtureProvider\ImageProviderFixture:
+        public: true
+    App\DataFixtures\FixtureProvider\PlanteProviderFixture:
+        public: true 
+    App\DataFixtures\FixtureProvider\UserProviderFixture:
+        public: true 
+    
 
     App\Provider\UserProvider:
         public: true
