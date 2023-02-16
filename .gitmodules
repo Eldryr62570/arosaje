@@ -1,0 +1,3 @@
+[submodule "arosaje/arosaje/back-chat"]
+	path = arosaje/arosaje/back-chat
+	url = https://github.com/Eldryr62570/back-chat.git
