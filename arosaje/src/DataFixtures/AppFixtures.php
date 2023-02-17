@@ -4,7 +4,6 @@ namespace App\DataFixtures;
 
 
 use Faker\Factory;
-use Faker\Provider\PlanteProvider;
 use Doctrine\Persistence\ObjectManager;
 use Faker\Provider\UserProviderFixture;
 use Faker\Provider\PlanteProviderFixture;
@@ -21,7 +20,6 @@ class AppFixtures extends Fixture
         $this->passwordHasher = $passwordHasher;
      
     }
-    
     public function load(ObjectManager $manager): void
     {
         define("NUMBER_USERS" , 100);

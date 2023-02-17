@@ -2,9 +2,10 @@
 
 namespace App\Entity;
 
+use Doctrine\ORM\Mapping as ORM;
 use ApiPlatform\Metadata\ApiResource;
 use App\Repository\CommentaireRepository;
-use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Serializer\Annotation\Groups;
 
 #[ORM\Entity(repositoryClass: CommentaireRepository::class)]
 #[ApiResource]
@@ -16,12 +17,15 @@ class Commentaire
     private ?int $id = null;
 
     #[ORM\Column(length: 5096, nullable: true)]
+    #[Groups(['get:plantItem', 'get:plantList'])]
     private ?string $texte_commentaire = null;
 
     #[ORM\Column]
+    #[Groups(['get:plantItem', 'get:plantList'])]
     private ?\DateTimeImmutable $created_at = null;
 
     #[ORM\Column(nullable: true)]
+    #[Groups(['get:plantItem', 'get:plantList'])]
     private ?\DateTimeImmutable $updated_at = null;
 
     #[ORM\ManyToOne(inversedBy: 'commentaires')]

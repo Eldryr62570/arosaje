@@ -2,10 +2,12 @@
 
 namespace App\Entity;
 
-use App\Repository\ImagesPlanteRepository;
 use Doctrine\ORM\Mapping as ORM;
+use ApiPlatform\Metadata\ApiResource;
+use App\Repository\ImagesPlanteRepository;
 
 #[ORM\Entity(repositoryClass: ImagesPlanteRepository::class)]
+#[ApiResource]
 class ImagesPlante
 {
     #[ORM\Id]

@@ -2,14 +2,26 @@
 
 namespace App\Entity;
 
-use ApiPlatform\Metadata\ApiResource;
-use App\Repository\PlanteRepository;
-use Doctrine\Common\Collections\ArrayCollection;
-use Doctrine\Common\Collections\Collection;
+use App\Entity\Commentaire;
+use App\Entity\ImagesPlante;
+use ApiPlatform\Metadata\Get;
 use Doctrine\ORM\Mapping as ORM;
+use App\Repository\PlanteRepository;
+use ApiPlatform\Metadata\ApiResource;
+use ApiPlatform\Metadata\GetCollection;
+use Doctrine\Common\Collections\Collection;
+use Doctrine\Common\Collections\ArrayCollection;
+use Symfony\Component\Serializer\Annotation\Groups;
 
 #[ORM\Entity(repositoryClass: PlanteRepository::class)]
-#[ApiResource]
+#[ApiResource(
+    operations: [
+        new Get(normalizationContext: ['groups' => 'get:plantItem']),
+        new GetCollection(normalizationContext: ['groups' => 'get:plantList'])
+    ],
+        order: ['createdAt' => 'DESC'],
+        paginationEnabled: false,
+)]
 class Plante
 {
     #[ORM\Id]
@@ -18,25 +30,32 @@ class Plante
     private ?int $id = null;
 
     #[ORM\Column(length: 100)]
+    #[Groups(['get:plantItem' , 'get:plantList'])]
     private ?string $nom_plante = null;
 
     #[ORM\Column(length: 5096)]
+    #[Groups(['get:plantItem', 'get:plantList'])]
     private ?string $description_plante = null;
 
     #[ORM\Column(length: 100)]
+    #[Groups(['get:plantItem', 'get:plantList'])]
     private ?string $image_plante = null;
 
     #[ORM\Column]
+    #[Groups(['get:plantItem', 'get:plantList'])]
     private ?\DateTimeImmutable $created_at = null;
 
     #[ORM\Column(nullable: true)]
+    #[Groups(['get:plantItem', 'get:plantList'])]
     private ?\DateTimeImmutable $updated_at = null;
 
     #[ORM\ManyToOne(inversedBy: 'plantes')]
     #[ORM\JoinColumn(nullable: false)]
+    #[Groups(['get:plantItem', 'get:plantList'])]
     private ?User $User = null;
 
     #[ORM\OneToMany(mappedBy: 'Plante', targetEntity: Commentaire::class, orphanRemoval: true)]
+    #[Groups(['get:plantItem', 'get:plantList'])]
     private Collection $commentaires;
 
     #[ORM\ManyToOne(inversedBy: 'plantes')]

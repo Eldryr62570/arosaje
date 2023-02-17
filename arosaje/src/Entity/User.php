@@ -2,15 +2,18 @@
 
 namespace App\Entity;
 
-use App\Repository\UserRepository;
-use Doctrine\Common\Collections\ArrayCollection;
-use Doctrine\Common\Collections\Collection;
+use ApiPlatform\Metadata\ApiResource;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
-use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface;
+use App\Repository\UserRepository;
+use Doctrine\Common\Collections\Collection;
+use Doctrine\Common\Collections\ArrayCollection;
+use Symfony\Component\Serializer\Annotation\Groups;
 use Symfony\Component\Security\Core\User\UserInterface;
+use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface;
 
 #[ORM\Entity(repositoryClass: UserRepository::class)]
+#[ApiResource()]
 class User implements UserInterface, PasswordAuthenticatedUserInterface
 {
     #[ORM\Id]
@@ -31,9 +34,11 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     private ?string $password = null;
 
     #[ORM\Column(length: 100)]
+    #[Groups(['get:plantItem', 'get:plantList'])]
     private ?string $nom_user = null;
 
     #[ORM\Column(length: 100)]
+    #[Groups(['get:plantItem', 'get:plantList'])]
     private ?string $prenom_user = null;
 
     #[ORM\Column(length: 25, nullable: true)]
@@ -46,6 +51,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     private ?string $cp_user = null;
 
     #[ORM\Column(length: 100, nullable: true)]
+    #[Groups(['get:plantItem', 'get:plantList'])]
     private ?string $ville_user = null;
 
     #[ORM\Column(type: Types::DATE_MUTABLE)]
