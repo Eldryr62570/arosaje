@@ -37,7 +37,7 @@ class Plante
     #[Groups(['get:plantItem', 'get:plantList'])]
     private ?string $description_plante = null;
 
-    #[ORM\Column(length: 100)]
+    #[ORM\Column(length: 1024)]
     #[Groups(['get:plantItem', 'get:plantList'])]
     private ?string $image_plante = null;
 
